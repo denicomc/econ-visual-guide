@@ -1,0 +1,104 @@
+--- 
+title: " "
+author: ""
+date: ''
+output: pdf_document
+description: Introduction
+documentclass: book
+link-citations: yes
+bibliography:
+- book.bib
+- packages.bib
+site: bookdown::bookdown_site
+biblio-style: apalike
+---
+
+
+# Access Economic Data via the BEA API
+
+While BEA data can be accessed via the official website, programming-inclined users can easily access data through BEA's Application Programming Interface (API), which is a common way of querying and retrieving data. For R Users, BEA has developed the `bea.R` library that is optimized for econometricians, statisticians, and data analysts. `bea.R` can be installed directly from CRAN:
+
+```{r, eval = FALSE}
+install.packages("bea.R")
+```
+
+Upon installation, load the library:
+
+```{r, message = FALSE, warning=FALSE}
+library(bea.R)
+```
+
+In order for BEA to understand user needs and to ensure a consistent, high level of service, the BEA API requires an API key -- a simple 36 character code that opens access to data. The API key is free, asking for your name and email address: [https://www.bea.gov/API/signup/index.cfm](https://www.bea.gov/API/signup/index.cfm). Upon submitting an API key request, the key will be emailed to you.
+
+Once you have received your BEA API key, save it to a variable to make it easier to use later:
+
+```{r, eval = FALSE}
+beaKey <- "[36-Character-Key]"
+```
+```{r, echo = FALSE}
+#beaKey =  readLines("/Users/jeff/Documents/keys/beaKey.txt")
+beaKey =  readLines("C:/Users/Jeff/Documents/beakey.txt")
+```
+
+
+
+## Searching for data 
+
+Much like using an index in a textbook, making a successful data retrieval request to the API requires specific information (e.g. variable series code, frequency, geographic units). The R library's search functionality provides facility to easily surface the necessary information. Search is facilitated by the `beaSearch()` method, which requires two arguments: _keyword_ and _beaKey_. 
+
+For example, the following keyword search returns a list of all datasets in which the term "Personal Consumption Expenditures" appears. One particularly important aspect of the search result is a pre-populated _API call_ that jump starts the querying process.
+
+```{r, message = FALSE, warning=FALSE, eval = FALSE}
+beaSearch('Personal Consumption Expenditures', beaKey)
+```
+```{r, message = FALSE, warning=FALSE, echo = FALSE}
+knitr::kable(t(beaSearch('Personal Consumption Expenditures', beaKey)[1:2]), booktab = TRUE, caption = "Example results from through search interface.")
+```
+
+For some keyword searches, a sufficiently specific search will yield only a few results. Given the vast amount of data that BEA publishes, the search functionality will often return a sizable amount of candidate results. This may be more easily evaluated by specifying `asHtml = TRUE`, which presents search results in an interactive, searchable table.
+
+```{r, message = FALSE, warning=FALSE, eval = FALSE}
+beaSearch('Final sales of computers to domestic purchasers', beaKey, asHtml = TRUE)
+```
+
+
+## Get Data
+
+Using the sample API call from the above example, we will retrieve _Personal Consumption Expenditures_ from _Table 1.1.1. Percent Change From Preceding Period in Real Gross Domestic Product_. But in short, it is `TableID = 1` from the `NIPA` dataset. Below, the list object specifies the relevant parameters, requesting the data at a quarterly frequency for all years.
+
+```{r, message=FALSE, warning=FALSE}
+specs <- list(
+	'UserID' = beaKey,
+	'Method' = 'GetData',
+	'datasetname' = 'NIPA',
+	'TableID' = '1',
+	'Frequency' = 'Q',
+	'Year' = '2010,2012,2013,2014',
+	'ResultFormat' = 'json'
+)
+
+```
+
+To retrieve a limited selection of multiple years, list all the years you want to retrieve. For example, to retrieve data for 2010 through 2014, use `"Year"="2010,2012,2013,2014"`.
+
+The `beaGet()` function can use the `spec` list to retrieve data. By default, the data are returned in wide form -- each row is an indicator and each time period's data is represented as a separate column. 
+
+```{r, message=FALSE, warning=FALSE}
+df <- beaGet(specs);
+head(df, 3)
+```
+
+For some use cases, in particular for time series models, obtaining the data in long form is desirable, which can be done by setting `asWide = FALSE`.
+
+```{r, message=FALSE, warning=FALSE, eval = FALSE}
+df <- beaGet(specs, asWide = FALSE);
+head(df, 3)
+```
+
+In other cases, it may be more desirable to obtain the data in a form in which each column represents a variable, which is accomplished by setting `iTableStyle = FALSE`.
+
+```{r, message=FALSE, warning=FALSE, eval = FALSE}
+df <- beaGet(specs, iTableStyle = FALSE)
+head(df, 3)
+```
+

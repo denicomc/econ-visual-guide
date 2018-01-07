@@ -1,0 +1,65 @@
+--- 
+title: "Interactive Time Series"
+date: '`r Sys.Date()`'
+output: pdf_document
+documentclass: book
+site: bookdown::bookdown_site
+biblio-style: apalike
+---
+
+
+# Interactive Time Series Graphs
+
+- Time series plot on national data
+- Dygraphs
+
+## Set up data
+```{r, message = FALSE, warning = FALSE}
+library(bea.R)
+library(xts)
+library(dygraphs)
+
+#PCE
+specs <- list(
+	'UserID' = beaKey,
+	'Method' = 'GetData',
+	'datasetname' = 'NIPA',
+	'TableID' = '1',
+	'Frequency' = 'A',
+	'Year' = 'X',
+	'ResultFormat' = 'json'
+)
+
+#Personal Income Per Capita
+  df <- beaGet(specs, iTableStyle = FALSE)
+  
+#Check data
+  head(df,1)
+```
+
+Dygraphs require that time series data are converted into `xts` formats. All that is required to convert data are the data series and a time variable in a date-time format: 
+```{r}
+#Convert the first two columns of df into annual xts objects
+  xt1 <- xts(x = df[,2], order.by = as.Date(df$TimePeriod, "%Y"))
+  xt2 <- xts(x = df[,3], order.by = as.Date(df$TimePeriod, "%Y"))
+```
+
+## Create time series graphs
+
+Single 
+```{r, fig.height = 2, fig.cap = "One graph"}
+  dygraph(xt1, group = "compare") 
+```
+
+Double sync
+```{r, fig.height = 3, eval = FALSE}
+  dygraph(xt1, group = "compare") 
+  dygraph(xt2, group = "compare")
+```
+```{r, fig.height = 3, echo = FALSE}
+  dygraph(xt1, group = "compare") 
+  dygraph(xt2, group = "compare")
+```
+
+
+

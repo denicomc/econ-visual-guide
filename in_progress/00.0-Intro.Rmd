@@ -1,0 +1,14 @@
+--- 
+title: "R"
+date: '`r Sys.Date()`'
+output: pdf_document
+documentclass: book
+site: bookdown::bookdown_site
+biblio-style: apalike
+---
+# Getting Started
+
+Visualization is not just a visible product, but the result of a data intensive process.
+
+- creating basic visualizations has been made vastly more accessible in recent years
+- 
