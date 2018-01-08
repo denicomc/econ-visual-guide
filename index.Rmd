@@ -1,6 +1,6 @@
 --- 
 title: " "
-author: ""
+author: " "
 date: ''
 output: pdf_document
 description: Introduction
@@ -14,12 +14,16 @@ biblio-style: apalike
 ---
 #  Guide to Economic Data + Interactive Visualization in R {-}
 
-_Version as of January 2018_ 
+__As of January 2018__
 
-This guide provides easy and intuitive tutorials to visualizing economic data. It is an evolving document that will grow and be refined as new best practices are introduced. In the current version, two topics are covered: 
+_Jeff Chen / Chief Innovation Officer_ 
 
-- Accessing economic data via the BEA API using a R Library
-- Creating interactive maps
+_Andrea Batch / Economist_
+
+Getting started with data visualization involves climbing a learning curve. This guide straightens the curve through intuitive tutorials focused on visualization of economic data. It is an evolving document that will grow and be refined. In the current version, two topics are covered: 
+
+- Accessing economic data via the BEA API using BEA's R Library
+- Creating interactive maps 
 
 
 
