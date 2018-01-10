@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title></title>
   <meta name="description" content="Introduction">
-  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="" />
   <meta property="og:type" content="book" />
@@ -146,15 +146,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>In order for BEA to understand user needs and to ensure a consistent, high level of service, the BEA API requires an API key – a simple 36 character code that opens access to data. The API key is free, asking for your name and email address: <a href="https://www.bea.gov/API/signup/index.cfm" class="uri">https://www.bea.gov/API/signup/index.cfm</a>. Upon submitting an API key request, the key will be emailed to you.</p>
 <p>Once you have received your BEA API key, save it to a variable to make it easier to use later:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">beaKey &lt;-<span class="st"> &quot;[36-Character-Key]&quot;</span></code></pre></div>
-<pre><code>## Warning in readLines(&quot;C:/Users/Jeff/Documents/beakey.txt&quot;): incomplete
-## final line found on &#39;C:/Users/Jeff/Documents/beakey.txt&#39;</code></pre>
 <div id="searching-for-data" class="section level2">
 <h2><span class="header-section-number">1.1</span> Searching for data</h2>
 <p>Much like using an index in a textbook, making a successful data retrieval request to the API requires specific information (e.g. variable series code, frequency, geographic units). The R library’s search functionality provides facility to easily surface the necessary information. Search is facilitated by the <code>beaSearch()</code> method, which requires two arguments: <em>keyword</em> and <em>beaKey</em>.</p>
 <p>For example, the following keyword search returns a list of all datasets in which the term “Personal Consumption Expenditures” appears. One particularly important aspect of the search result is a pre-populated <em>API call</em> that jump starts the querying process.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">beaSearch</span>(<span class="st">&#39;Personal Consumption Expenditures&#39;</span>, beaKey)</code></pre></div>
 <table>
-<caption><span id="tab:unnamed-chunk-6">Table 1.1: </span>Example results from through search interface.</caption>
+<caption><span id="tab:unnamed-chunk-16">Table 1.1: </span>Example results from through search interface.</caption>
 <tbody>
 <tr class="odd">
 <td align="left">SeriesCode</td>
@@ -321,7 +319,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
 <script>
-gitbook.require(["gitbook"], function(gitbook) {
+require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": false,

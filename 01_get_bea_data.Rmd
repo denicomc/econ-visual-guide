@@ -36,8 +36,8 @@ Once you have received your BEA API key, save it to a variable to make it easier
 beaKey <- "[36-Character-Key]"
 ```
 ```{r, echo = FALSE}
-#beaKey =  readLines("/Users/jeff/Documents/keys/beaKey.txt")
-beaKey =  readLines("C:/Users/Jeff/Documents/beakey.txt")
+beaKey =  readLines("/Users/jeff/Documents/keys/beaKey.txt")
+#beaKey =  readLines("C:/Users/Jeff/Documents/beakey.txt")
 ```
 
 

@@ -118,6 +118,13 @@ map_object
 
 In order to render the color-coded polygons as a _chloropleth map_, we need two types of information: the _geometries_ of US states and their economic _attributes_. The shape of each state is stored in a special data format, such as a shapefile or GeoJSON, that contains  geographic coordinates and properties that indicate the type of shape (e.g. line, polygon, point). The geometries on their own are useful to render the outline of each state, but do not usually come furnished with economic data. Each shape is associated with an identifier that can be used to join new data, such as economic attributes.
 
+```{r, echo = FALSE, fig.cap = "Process flow for creating map.", message=FALSE, warning=FALSE, fig.width =7}
+library(raster)
+b <- brick("assets/map-pieces.png", package="raster")
+plotRGB(b, interpolate = TRUE, maxpixels = 10^7)
+```
+
+
 Below, in order to construct a map containing growth of per capita personal income and personal expenditures by state, we layout and illustrate a five step process: 
 
 1. Get BEA data from the API and make adjustments
